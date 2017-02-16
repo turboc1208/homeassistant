@@ -15,30 +15,6 @@ PhoneChip:
   track: true
   vendor: Apple, Inc.
 
-hairy:
-  hide_if_away: false
-  mac:
-  name: hairy
-  picture:
-  track: false
-  vendor:
-
-luke:
-  hide_if_away: false
-  mac:
-  name: luke
-  picture:
-  track: false
-  vendor:
-
-buzz:
-  hide_if_away: false
-  mac:
-  name: buzz
-  picture:
-  track: false
-  vendor:
-
 phonecharlie:
   hide_if_away: false
   mac: F0:24:75:80:8C:D3
@@ -47,54 +23,12 @@ phonecharlie:
   track: true
   vendor: Apple, Inc.
 
-charlie:
-  hide_if_away: false
-  mac:
-  name: charlie
-  picture:
-  track: true
-  vendor:
-
-phonesam:
-  hide_if_away: false
-  mac: DC:A4:CA:1D:27:57
-  name: Sam Phone
-  picture:
-  track: true
-  vendor: Apple, Inc.
-
-sam:
-  hide_if_away: false
-  mac:
-  name: sam
-  picture:
-  track: true
-  vendor:
-
-
-chips_keys:
-  hide_if_away: false
-  mac:
-  name: chips keys
-  picture:
-  track: true
-  vendor:
-
-susan_keys:
-  hide_if_away: false
-  mac:
-  name: susan keys
-  picture:
-  track: true
-  vendor:
-
-
 xbr65x810c:
   hide_if_away: false
   mac: BT_60:6D:C7:2F:24:90
   name: XBR-65X810C
   picture:
-  track: true
+  track: false
   vendor: Hon Hai Precision Ind. Co.,Ltd.
 
 ccmacbookpro:
@@ -102,7 +36,7 @@ ccmacbookpro:
   mac: BT_3C:15:C2:BD:1B:5B
   name: ccmacbookpro
   picture:
-  track: true
+  track: false
   vendor: Apple, Inc.
 
 turboc1208_cc1208:
@@ -128,3 +62,11 @@ scox1209_scox1209:
   picture:
   track: true
   vendor:
+
+dca4ca1d2757:
+  hide_if_away: false
+  mac: DC:A4:CA:1D:27:57
+  name: dca4ca1d2757
+  picture:
+  track: true
+  vendor: Apple, Inc.

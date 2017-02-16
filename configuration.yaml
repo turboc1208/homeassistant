@@ -60,7 +60,7 @@ sun:
 zeroconf:
 
 shell_command:
-  backupha: '/home/homeassistant/habackup'
+  backupha: "sudo su homeassistant -c '/home/homeassistant/habackup'"
 
 notify:
   - name: SYSLOG
@@ -210,9 +210,9 @@ device_tracker:
       - 192.168.2.124
       - 192.168.2.126
       - 192.168.2.114
-  - platform: trackr
-    username: !secret trackruser
-    password: !secret trackrpassword
+#  - platform: trackr
+#    username: !secret trackruser
+#    password: !secret trackrpassword
   - platform: owntracks
     max_gps_accuracy: 100
     waypoints: True

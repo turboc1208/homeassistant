@@ -67,10 +67,10 @@ all_mobile_devices:
     - device_tracker.phonesam
     - device_tracker.phonecharlie
     - device_tracker.phonesusan
-    - device_tracker.chips_keys
-    - device_tracker.susan_keys
-    - device_tracker.charlie
-    - device_tracker.sam
+#    - device_tracker.chips_keys
+#    - device_tracker.susan_keys
+#    - device_tracker.charlie
+#    - device_tracker.sam
     - device_tracker.turboc1208_cc1208
     - device_tracker.scox1209_scox1209
     - device_tracker.scox0129_sc0129
