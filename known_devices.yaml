@@ -1,0 +1,130 @@
+
+PhoneSusan:
+  hide_if_away: false
+  mac: E0:B5:2D:E1:C3:AF
+  name: Susan iPhone
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+PhoneChip:
+  hide_if_away: false
+  mac: 9C:FC:01:CB:FE:B1
+  name: Chip iPhone
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+hairy:
+  hide_if_away: false
+  mac:
+  name: hairy
+  picture:
+  track: false
+  vendor:
+
+luke:
+  hide_if_away: false
+  mac:
+  name: luke
+  picture:
+  track: false
+  vendor:
+
+buzz:
+  hide_if_away: false
+  mac:
+  name: buzz
+  picture:
+  track: false
+  vendor:
+
+phonecharlie:
+  hide_if_away: false
+  mac: F0:24:75:80:8C:D3
+  name: charlie iPhone
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+charlie:
+  hide_if_away: false
+  mac:
+  name: charlie
+  picture:
+  track: true
+  vendor:
+
+phonesam:
+  hide_if_away: false
+  mac: DC:A4:CA:1D:27:57
+  name: Sam Phone
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+sam:
+  hide_if_away: false
+  mac:
+  name: sam
+  picture:
+  track: true
+  vendor:
+
+
+chips_keys:
+  hide_if_away: false
+  mac:
+  name: chips keys
+  picture:
+  track: true
+  vendor:
+
+susan_keys:
+  hide_if_away: false
+  mac:
+  name: susan keys
+  picture:
+  track: true
+  vendor:
+
+
+xbr65x810c:
+  hide_if_away: false
+  mac: BT_60:6D:C7:2F:24:90
+  name: XBR-65X810C
+  picture:
+  track: true
+  vendor: Hon Hai Precision Ind. Co.,Ltd.
+
+ccmacbookpro:
+  hide_if_away: false
+  mac: BT_3C:15:C2:BD:1B:5B
+  name: ccmacbookpro
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+turboc1208_cc1208:
+  hide_if_away: false
+  mac:
+  name: ot_chip
+  picture:
+  track: true
+  vendor:
+
+scox0129_sc0129:
+  hide_if_away: false
+  mac:
+  name: ot_sam
+  picture:
+  track: true
+  vendor:
+
+scox1209_scox1209:
+  hide_if_away: false
+  mac:
+  name: ot_susan
+  picture:
+  track: true
+  vendor:

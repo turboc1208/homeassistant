@@ -1,0 +1,36 @@
+
+- cal_id: chip.cox@coxdogs.com
+  entities:
+  - device_id: chipcoxcoxdogscom
+    name: chip.cox@coxdogs.com
+    track: true
+
+- cal_id: '#contacts@group.v.calendar.google.com'
+  entities:
+  - device_id: contacts
+    name: Contacts
+    track: false
+
+- cal_id: en.usa#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: holidays_in_united_states
+    name: Holidays in United States
+    track: true
+
+- cal_id: sam.cox@coxdogs.com
+  entities:
+  - device_id: samcoxcoxdogscom
+    name: sam.cox@coxdogs.com
+    track: true
+
+- cal_id: susan.cox@coxdogs.com
+  entities:
+  - device_id: susancoxcoxdogscom
+    name: susan.cox@coxdogs.com
+    track: true
+
+- cal_id: charlie.cox@coxdogs.com
+  entities:
+  - device_id: charliecoxcoxdogscom
+    name: charlie.cox@coxdogs.com
+    track: true

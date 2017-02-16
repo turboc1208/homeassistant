@@ -1,0 +1,448 @@
+# Groups
+#default_view:
+#  view: no
+#  entities:
+#    - group.timeout_lights
+#    - group.default_view_sensors
+#    - group.all_lights
+#    - group.all_switches
+#    - group.all_garage_doors
+#    - group.all_mobile_devices
+#    - group.all_scripts
+#    - group.all_automations
+
+nightlight:
+  view: no
+  entities:
+    - light.stairway_light_switch
+    - light.den_fan_light
+
+default_view_sensors:
+  view: no
+  entities:
+    - sensor.date
+    - sensor.time
+    - sensor.pws_weather
+    
+office_lights:
+  view: no
+  entities:
+    - light.office_fan_light_1
+    - light.office_fan_light_2
+    - light.office_fan_light_3
+    - light.office_fan_light_4
+
+nighttime:
+  view: no
+  entities:
+    - sensor.begin_night_time
+    - input_slider.nighttime_hour
+    - input_slider.nighttime_minutes
+
+morning:
+  view: no
+  entities:
+    - sensor.begin_morning
+    - input_slider.morning_hour
+    - input_slider.morning_minutes
+
+timeout_lights:
+  view: no
+  entities:
+    - group.office_lights
+    - switch.stairway_switch
+    - group.kitchen_lights
+    - group.den_lights
+    - group.breakfastroom
+    - light.outdoor_patio_light
+    - switch.garage_lights
+    - light.stairway_light_switch
+    - switch.landing_light
+    - group.all_garage_doors
+
+all_mobile_devices:
+  view: no
+  entities:
+    - device_tracker.phonechip
+    - device_tracker.phonesam
+    - device_tracker.phonecharlie
+    - device_tracker.phonesusan
+    - device_tracker.chips_keys
+    - device_tracker.susan_keys
+    - device_tracker.charlie
+    - device_tracker.sam
+    - device_tracker.turboc1208_cc1208
+    - device_tracker.scox1209_scox1209
+    - device_tracker.scox0129_sc0129
+
+all_garage_doors:
+  view: no
+  entities:
+    - cover.single_car
+    - cover.two_car
+
+# View Related groups
+office:
+  view: yes
+  entities:
+    - group.office_lights
+    - media_player.office_directv
+
+stair_lights:
+  view: no
+  entities:
+    - light.a19_rgbw_60_01
+    - light.a19_rgbw_60_02
+
+kitchen_lights:
+  view: no
+  entities:
+    - light.cabinet_light
+    - switch.kitchen_overhead_light
+
+kitchen:
+  view: yes
+  entities:
+    - group.kitchen_lights
+
+breakfastroom:
+  view: yes
+  entities:
+    - switch.breakfast_room_light
+
+den:
+  view: yes
+  entities:
+    - group.den_lights
+    - media_player.den_directv
+    - media_player.dentv
+    - scene.DenWatchDirectv
+    - scene.DenTurnOfftv
+
+den_lights:
+  view: no
+  entities:
+    - switch.stairway_switch
+    - light.den_fan_light
+    - switch.den_power_outlet
+    - switch.breakfast_room_light
+    - switch.kitchen_overhead_light
+
+garage:
+  view: yes
+  entities:
+    - group.all_garage_doors
+    - switch.carriage_lights
+    - switch.garage_lights
+
+xmas:
+  view: yes
+  entities:
+    - switch.outdoor_xmas_lights
+    - switch.den_power_outlet
+    - light.front_porch_3
+    - light.front_porch_4
+
+media:
+  view: yes
+  entities:
+    - media_player.gameroom_directv
+
+masterbedroom:
+  view: yes
+  entities:
+    - sensor.time
+    - sensor.date
+    - sensor.masteralarm_time
+    - group.masterlights
+    - media_player.master_directv
+    - media_player.roku_13a18n164035
+    - group.masteralarm
+
+masterlights:
+  view: no
+  entities:
+    - light.master_light_switch
+    - switch.master_fan
+    - switch.master_toilet_light
+    - switch.master_toilet_fan
+    - light.master_floor_light
+
+masteralarm:
+  view: no
+  entities:
+    - sensor.masteralarm_time
+    - input_slider.masteralarmhour
+    - input_slider.masteralarmminutes
+    - input_boolean.masteralarmSunday
+    - input_boolean.masteralarmMonday
+    - input_boolean.masteralarmTuesday
+    - input_boolean.masteralarmWednesday
+    - input_boolean.masteralarmThursday
+    - input_boolean.masteralarmFriday
+    - input_boolean.masteralarmSaturday
+    - input_boolean.masteralarm
+
+sambedroom:
+  view: yes
+  entities: 
+    - sensor.time
+    - sensor.date
+    - group.samalarm
+    - group.samlights
+
+samlights:
+  view: no
+  entities:
+    - light.sam_light_switch
+    - light.sam_fan_switch
+
+samalarm:
+  view: no
+  entities:
+    - sensor.samalarm_time 
+    - input_slider.samalarmhour
+    - input_slider.samalarmminutes
+    - input_boolean.samalarmSunday
+    - input_boolean.samalarmMonday
+    - input_boolean.samalarmTuesday
+    - input_boolean.samalarmWednesday
+    - input_boolean.samalarmThursday
+    - input_boolean.samalarmFriday
+    - input_boolean.samalarmSaturday
+    - input_boolean.samalarm
+
+charlielights:
+  view: no
+  entities:
+    - light.charile_light_switch
+    - light.charlie_fan_switch
+
+charliebedroom:
+  view: yes
+  entities:
+    - sensor.time
+    - sensor.date
+    - group.charliealarm
+    - group.charlielights
+
+charliealarm:
+  view: no
+  entities:
+    - sensor.charliealarm_time
+    - input_slider.charliealarmhour
+    - input_slider.charliealarmminutes
+    - input_boolean.charliealarmSunday
+    - input_boolean.charliealarmMonday
+    - input_boolean.charliealarmTuesday
+    - input_boolean.charliealarmWednesday
+    - input_boolean.charliealarmThursday
+    - input_boolean.charliealarmFriday
+    - input_boolean.charliealarmSaturday
+    - input_boolean.charliealarm
+
+downstairs:
+  view: yes
+  entities: 
+    - group.den
+    - group.office
+    - switch.downstairs_hallway_outlet
+    - switch.landing_light
+
+vacant_lights_out:
+  view: no
+  entities:
+    - group.Den
+    - group.office
+    - group.masterbedroom
+
+guestalarm:
+  view: no
+  entities:
+    - sensor.guestalarm_time
+    - input_slider.guestalarmhour
+    - input_slider.guestalarmminutes
+    - input_boolean.guestalarmSunday
+    - input_boolean.guestalarmMonday
+    - input_boolean.guestalarmTuesday
+    - input_boolean.guestalarmWednesday
+    - input_boolean.guestalarmThursday
+    - input_boolean.guestalarmFriday
+    - input_boolean.guestalarmSaturday
+    - input_boolean.guestalarm
+
+guestlights:
+  view: no
+  entities:
+    - light.guest_room_fan
+    - switch.guest_light_switch
+
+guest_room:
+  view: yes
+  entities:
+    - sensor.time
+    - sensor.date
+    - group.guestlights
+    - group.guestalarm
+
+### Inserted from weather underground
+wunderground:
+  entities:
+#  Shared
+   - sensor.weather_underground_pws
+   - sensor.pws_station_id
+   - sensor.pws_observation_time
+   - sensor.pws_location
+#   - sensor.pws_elevation
+   - sensor.pws_uv
+   - sensor.pws_relative_humidity
+#   - sensor.pws_wind_degrees
+   - sensor.pws_wind_dir
+   - sensor.pws_wind_string
+#   - sensor.pws_dewpoint_string
+   - sensor.pws_feelslike_string
+#   - sensor.heat_index_string
+   - sensor.pws_precip_1hr_string
+   - sensor.pws_precip_today_string
+#  Fahrenheit/Imperial
+#   - sensor.pws_dewpoint_f
+   - sensor.pws_temp_f
+   - sensor.pws_feelslike_f
+#   - sensor.heat_index_f
+   - sensor.pws_wind_mph
+#   - sensor.pws_wind_gust_mph
+   - sensor.pws_precip_1hr_in
+   - sensor.pws_precip_today_in
+#   - sensor.pws_pressure_in
+#   - sensor.pws_visibility_mi
+#  Celsius/Metric
+#   - sensor.pws_dewpoint_c
+#   - sensor.pws_temp_c
+#   - sensor.pws_feelslike_c
+#   - sensor.pws_heat_index_c
+#   - sensor.pws_wind_kph
+#   - sensor.pws_wind_gust_kph
+#   - sensor.pws_precip_1hr_metric
+#   - sensor.pws_precip_today_metric
+#   - sensor.pws_pressure_mb
+#   - sensor.pws_visibility_km
+
+weather:
+  view: yes
+  entities:
+    - group.wunderground
+    - camera.generic_camera
+
+sysinfo:
+  view: no
+  entities:
+    - sensor.external_ip
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.cpu_use
+    - sensor.disk_free_
+    - sensor.disk_use_
+    - sensor.ram_free
+    - sensor.last_boot
+    - sensor.since_last_boot
+    - sensor.current_hass_version
+    - sensor.new_ha_release
+    - sensor.fs2k8v1
+
+ptrinfo:
+  view: no
+  entities:
+    - group.dsp1hp
+    - group.ofhp1
+
+dsp1hp:
+  view: no
+  entities:
+    - input_slider.dsp1hp_black
+    - input_slider.dsp1hp_cyan
+    - input_slider.dsp1hp_yellow
+    - input_slider.dsp1hp_magenta
+
+ofhp1:
+  view: no
+  entities:
+    input_slider.ofhp1_black
+
+system_info:
+  view: yes
+  entities:
+    - group.sysinfo
+    - group.ptrinfo
+
+nestgroup_downstairs:
+  view: no
+  entities:
+    - binary_sensor.downstairs_thermostat_fan
+    - binary_sensor.downstairs_thermostat_has_leaf
+    - binary_sensor.downstairs_thermostat_is_locked
+    - binary_sensor.downstairs_thermostat_is_using_emergency_heat
+    - binary_sensor.downstairs_thermostat_online
+    - sensor.downstairs_thermostat_humidity
+    - sensor.downstairs_thermostat_operation_mode
+    - sensor.downstairs_thermostat_target
+    - sensor.downstairs_thermostat_temperature
+
+nestgroup_upstairs:
+  view: no
+  entities:
+    - binary_sensor.upstairs_thermostat_fan
+    - binary_sensor.upstairs_thermostat_has_leaf
+    - binary_sensor.upstairs_thermostat_is_locked
+    - binary_sensor.upstairs_thermostat_is_using_emergency_heat
+    - binary_sensor.upstairs_thermostat_online
+    - sensor.upstairs_thermostat_humidity
+    - sensor.upstairs_thermostat_operation_mode
+    - sensor.upstairs_thermostat_target
+    - sensor.upstairs_thermostat_temperature
+
+thermostats:
+  view: yes
+  entities:
+    - group.nestgroup_downstairs
+    - group.nestgroup_upstairs
+
+master_toilet:
+  view: no
+  entities:
+    - switch.master_toilet_fan
+    - switch.master_toilet_light
+
+half_toilet:
+  view: no
+  entities:
+    - switch.half_bath_fan
+    - switch.half_bath_light
+
+sam_toilet:
+  view: no
+  entities:
+    - switch.sam_toilet_fan
+    - switch.sam_toilet_light
+
+toilet_pairs:
+  view: no
+  entities:
+    - group.master_toilet
+    - group.half_toilet
+    - group.sam_toilet
+
+ge_door:
+  view: no
+  entities:
+    - binary_sensor.ge_32563_hinge_pin_smart_door_sensor_sensor_3_0
+    - sensor.ge_32563_hinge_pin_smart_door_sensor_access_control_3_9
+    - sensor.ge_32563_hinge_pin_smart_door_sensor_alarm_level_3_1
+    - sensor.ge_32563_hinge_pin_smart_door_sensor_alarm_type_3_0
+    - sensor.ge_32563_hinge_pin_smart_door_sensor_sourcenodeid_3_2
+
+spots_lights:
+  view: no
+  entities:
+    - switch.kitchen_overhead_light
+    - light.stairway_light_switch

@@ -1,0 +1,184 @@
+#- alias: 'Den Light On Default'
+#  trigger:
+#    platform: state
+#    entity_id: light.den_fan_light
+#    from: 'off'
+#    to: 'on'
+#  action:
+#    - service: light.turn_on
+#      entity_id: light.den_fan_light
+#      data:
+#        brightness: 40
+
+#- alias: 'Stair Switch Timeout'
+#  trigger:
+#    platform: state
+#    entity_id: switch.stairway_switch
+#    state: 'on'
+#    for:
+#      minutes: 5
+#  condition: 
+#    condition: or
+#    conditions:
+#      - condition: time
+#        after: '22:00'
+#      - condition: time
+#        before: '5:00'
+#  action:
+#    - service: switch.turn_off
+#      entity_id: switch.stairway_switch
+
+#- alias: 'Breakfast Room Switch Timeout'
+#  trigger:
+#    platform: state
+#    entity_id: light.breakfast_room_light
+#    state: 'on'
+#    for:
+#      minutes: 5
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: time
+#        after: '22:00'
+#      - condition: time
+#        before: '5:00'
+#  action:
+#    - service: notify.EmailChip
+#      data:
+#        title: 'Breakfast Room switch timeout'
+#        message: 'Breakfast room switch timeout activated'
+#    - service: light.turn_off
+#      entity_id: light.breakfast_room_light
+
+#- alias: 'Kitchen overhead light Timeout'
+#  trigger:
+#    platform: state
+#    entity_id: switch.kitchen_overhead_light
+#    state: 'on'
+#    for:
+#      minutes: 5
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: time
+#        after: '22:00'
+#      - condition: time
+#        before: '5:00'
+#  action:
+#    - service: switch.turn_off
+#      entity_id: switch.kitchen_overhead_light
+
+# start backup at 1 minute after midnight
+- alias: 'backup automation'
+  trigger:
+    platform: time
+    hours: 0
+    minutes: 1
+    seconds: 0
+  action:
+    service: shell_command.backupha
+
+- alias: ipchange
+  trigger:
+    - platform: state
+      entity_id: sensor.downstairs_last_ip
+      from: sensor.downstairs_last_ip
+  action:
+    - service: notify.EmailChip
+      data:
+        title: 'IP address changed'
+        message: 'IP address changed'
+
+#- alias: dentvlights
+#  trigger:
+#    - platform: state
+#      entity_id: media_player.dentv
+#      from: 'off'
+#      to: 'on'
+#  condition:
+#    - condition: state
+#      entity_id: light.den_fan_light
+#      state: 'on'
+#  action:
+#    - service: light.turn_on
+#      entity_id: light.den_fan_light
+#      data:
+#        brightness: '5' 
+
+#- alias: dentvlightsoff
+#  trigger:
+#    - platform: state
+#      entity_id: media_player.dentv
+#      from: 'on'
+#      to: 'off'
+#  condition:
+#    - condition: state
+#      entity_id: light.den_fan_light
+#      state: 'on'
+#  action:
+#    - service: light.turn_on
+#      entity_id: light.den_fan_light
+#      data:
+#        brightness: '40'
+
+#- alias: turnoffmasterpottyfan
+#  trigger:
+#    - platform: state
+#      entity_id: switch.master_toilet_light
+#      to: 'off'
+#      for:
+#        minutes: 5
+#  condition:
+#    - condition: state
+#      entity_id: switch.master_toilet_fan
+#      state: 'on'
+#  action:
+#    - service: switch.turn_off
+#      entity_id: switch.master_toilet_fan
+
+#- alias: GarageDoorClose_single
+#  trigger: 
+#    - platform: state
+#      entity_id: cover.single_car
+#      state: 'open'
+#      for:
+#        minutes: 5
+#  condition:
+#    - condition: time
+#      after: '22:00'
+#  action:
+#    - service: cover.close_cover
+#      entity_id: cover.single_car
+
+#- alias: GarageDoorClose_double
+#  trigger:
+#    - platform: state
+#      entity_id: cover.two_car
+#      state: 'open'
+#      for:
+#        minutes: 5
+#  condition:
+#    - condition: time
+#      after: '22:00'
+#  action:
+#    - service: cover.close_cover
+#      entity_id: cover.two_car
+
+- alias: vacantclosegaragedoor
+  trigger:
+    - platform: state
+      entity_id: group.all_mobile_devices
+      state: 'not_home'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: cover.single_car
+        state: 'open'
+      - condition: state
+        entity_id: cover.two_car
+        state: 'open'
+  action:
+    - service: cover.close_cover
+      entity_id: group.all_covers
+

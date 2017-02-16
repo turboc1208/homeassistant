@@ -1,0 +1,52 @@
+morning:
+  alias: 'Good Morning'
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.stairway_switch
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      data:
+        entity_id: group.stair_lights
+        brightness: 128
+        color_name: white
+    - delay:
+        seconds: 1
+    - service: switch.turn_off
+      data:
+        entity_id: switch.stairway_switch
+
+nighttime:
+  alias: "Good Night"
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.stairway_switch
+    - delay:
+        seconds: 1
+    - service: scene.turn_on
+      entity_id: scene.nighttime
+    - delay:
+        seconds: 1
+    - service: switch.turn_off
+      entity_id: switch.stairway_switch
+
+stairswitchoff:
+  alias: "Stair Switch Off"
+  sequence:
+    - service: light.turn_off
+      entity_id: group.Night_lights
+    - delay:
+        seconds: 10
+    - service: switch.turn_off
+      entity_id: switch.stairway_switch
+
+stair_switch_on:
+  alias: "Stair Switch On"
+  sequence:
+    - delay:
+        seconds: 10
+    - service: scene.turn_on
+      data:
+        entity_id: scene.daytime
+

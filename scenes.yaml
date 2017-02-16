@@ -1,0 +1,28 @@
+- name: nighttime
+  entities:
+    switch.den_fan_light: off
+    group.office_lights: off
+    switch.stairway_switch: on
+    group.Night_lights:
+#      rgb_color: [255,0,0]
+      color_name: red
+      brightness: 64
+      state: on
+
+- name: Daytime
+  entities:
+    switch.stairway_switch: on
+    group.Night_lights:
+      color_name: white
+      brightness: 128
+      state: on
+
+- name: DenWatchDirectv
+  entities:
+    media_player.DEN_Directv: on
+    media_player.DenTv: on
+
+- name: DenTurnOfftv
+  entities:
+    media_player.DEN_Directv: off
+    media_player.DenTv: off

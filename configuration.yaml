@@ -1,0 +1,641 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret lat
+  longitude: !secret lon
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 104
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  customize: !include customize.yaml
+
+# setup logging level
+logger:
+  default: info
+  logs:
+    homeassistant.components: info
+    homeassistant.components.script: info
+    homeassistant.components.light: info
+    homeassistant.components.switch: info
+    homeassistant.components.media_player: info
+    homeassistant.components.device_tracker: info
+    homeassistant.components.trigger: debug
+    homeassistant.components.automation: debug
+
+# Show links to resources in log and frontend
+introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: !secret api_pass
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+recorder:
+  db_url: !secret mysqldb
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# enable bonjour or avhi
+zeroconf:
+
+shell_command:
+  backupha: '/home/homeassistant/habackup'
+
+notify:
+  - name: SYSLOG
+    platform: syslog
+  - name: EmailChip
+    platform: smtp
+    server: smtp.gmail.com
+    port: 587
+    sender: !secret ccemail
+    starttls: true
+    username: !secret emailuser
+    password: !secret emailpass
+    recipient: !secret ccemail
+
+#hello_state:
+
+#chip_test:
+#  text: 'Hi there.'
+
+# Weather Prediction
+sensor:
+  - platform: time_date
+    display_options:
+      - 'date'
+      - 'time'
+  - platform: rest
+    resource: http://ip.jsontest.com
+    name: External IP
+    value_template: '{{ value_json.ip }}'
+  - platform: wunderground
+    api_key: !secret wunderapikey
+    monitored_conditions:
+      - temp_f
+      - weather
+      - precip_1hr_in
+      - wind_mph
+      - observation_time
+      - location
+      - UV
+      - relative_humidity
+      - wind_dir
+      - feelslike_string
+  - platform: nest
+    monitored_conditions:
+      - 'last_ip'
+      - 'local_ip'
+  - platform: template
+    sensors:
+      masteralarm_time:
+        friendly_name: 'Master Alarm Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.masteralarmhour") | int, states("input_slider.masteralarmminutes") | int) }}'
+      guestalarm_time:
+        friendly_name: 'Guest Room Alarm Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.guestalarmhour") | int, states("input_slider.guestalarmminutes") | int) }}'
+      samalarm_time:
+        friendly_name: 'Sams Room Alarm Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.samalarmhour") | int, states("input_slider.samalarmminutes") | int) }}'
+      charliealarm_time:
+        friendly_name: 'Charlies Room Alarm Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.charliealarmhour") | int, states("input_slider.charliealarmminutes") | int) }}'
+      begin_night_time:
+        friendly_name: 'Begin Night Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.nighttime_hour") | int, states("input_slider.nighttime_minutes") | int) }}'
+      begin_morning:
+        friendly_name: 'Begin Morning'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.morning_hour") | int, states("input_slider.morning_minutes") | int) }}'
+
+  - platform: speedtest
+    minute:
+      - 0
+      - 15
+      - 30
+      - 45
+    monitored_conditions: 
+      - ping
+      - download
+      - upload
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: memory_free
+      - type: processor_use
+      - type: last_boot
+      - type: since_last_boot
+  - platform: command_line
+    name: "Current HASS Version"
+    command: "/srv/homeassistant/homeassistant_venv/bin/hass --version"
+  - platform: command_line
+    command: /srv/homeassistant/homeassistant_venv/bin/python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: "New HA release"
+  - platform: snmp
+    host: 192.168.2.92
+    name: fs2k8v1
+    community: spice
+    baseoid: 1.3.6.1.2.1.1.5.0
+
+group: !include group.yaml
+automation: !include automation.yaml
+scene: !include scenes.yaml
+script: !include scripts.yaml
+
+#nest
+nest:
+  client_id: !secret nestclient
+  client_secret: !secret nestsecret
+#  username: !secret nestuserid
+#  password: !secret nestpassword
+
+climate: 
+  platform: nest
+
+#lights
+light:
+  - platform: osramlightify
+    host: 192.168.2.142
+
+#wink
+wink:
+#  access_token: !secret winktoken
+  email: !secret ccemail
+  password: !secret winkpassword 
+  client_id: !secret winkclient
+  client_secret: !secret winksecret
+
+google:
+  client_id: !secret googleclient
+  client_secret: !secret googlesecret
+
+#zwave
+zwave:
+  usb_path: /dev/zwave
+  config_path: /usr/local/lib/python3.4/dist-packages/libopenzwave-0.3.2-py3.4-linux-armv7l.egg/config
+
+ios:
+
+device_tracker:
+  - platform: nmap_tracker
+    interval_seconds: 60
+    home_interval: 5
+    consider_home: 0:05
+    hosts: 
+      - 192.168.2.127
+      - 192.168.2.128
+      - 192.168.2.124
+      - 192.168.2.126
+      - 192.168.2.114
+  - platform: trackr
+    username: !secret trackruser
+    password: !secret trackrpassword
+  - platform: owntracks
+    max_gps_accuracy: 100
+    waypoints: True
+    waypoint_whitelist:
+      - turboc1208
+
+mqtt:
+  broker: m12.cloudmqtt.com
+  port: 19736
+  username: !secret mqttuser
+  password: !secret mqttpassword
+
+media_player:
+  - platform: directv
+    host: 192.168.2.141
+    port: 8080
+    name: Office_Directv
+  - platform: directv
+    host: 192.168.2.108
+    port: 8080
+    name: MBR_Directv
+  - platform: directv
+    host: 192.168.2.104
+    port: 8080
+    name: DEN_Directv
+  - platform: directv
+    host: 192.168.2.119
+    port: 8080
+    name: GameRoom_Directv
+  - platform: roku
+    host: 192.168.2.130
+    name: MBR_Roku
+  - platform: braviatv
+    host: 192.168.2.113
+    name: DenTv
+  - platform: apple_tv
+    host: 192.168.2.102
+    login_id: 00000000-07ce-0a48-9410-cd36ff1d4845
+  - platform: cast
+
+zone 1:
+  name: Home
+  latitude: !secret lat
+  longitude: !secret lon
+  icon: mdi:home
+  radius: 500
+
+zone 2:
+  name: UOM
+  latitude: 35.119292
+  longitude: -89.937690
+  icon: mdi:school
+  radius: 500
+
+zone 3:
+  name: Bayer
+  latitude: 35.162948
+  longitude: -89.959961
+  icon: mdi:office
+  radius: 200
+
+zone 4:
+  name: "Macon Rd"
+  latitude: 35.162781
+  longitude: -89.929223
+  icon: mdi:store
+  radius: 100
+
+zone 5:
+  name: Spottswood
+  latitude: 35.113488
+  longitude: -89.904235
+  icon: mdi:store
+  radius: 100
+
+zone 6:
+  name: Corporate
+  latitude: 35.078147
+  longitude: -89.892294
+  icon: mdi:office
+  radius: 200
+
+zone 7:
+  name: Quince
+  latitude: 35.091139
+  longitude: -89.909798
+  icon: mdi:store
+  radius: 100
+
+zone 8:
+  name: Winchester
+  latitude: 35.051457
+  longitude: -89.845240
+  icon: mdi:store
+  radius: 100
+
+zone 9:
+  name: southaven
+  latitude: 34.961147
+  longitude: -89.973621
+  icon: mdi:store
+  radius: 100
+
+zone 10:
+  name: "covington pike"
+  latitude: 35.183604
+  longitude: -89.897668
+  icon: mdi:store
+  radius: 100
+
+zone 11:
+  name: frayser
+  latitude: 35.216578
+  longitude: -90.004700
+  icon: mdi:store
+  radius: 100
+
+zone 12:
+  name: MBA
+  latitude: 35.1485
+  longitude: -89.8041
+  icon: mdi:arena
+  radius: 100
+
+zone 13:
+  name: House
+  latitude: !secret lat
+  longitude: !secret lon
+  icon: mdi:home
+  radius: 500
+
+
+proximity:
+  chip_home:
+    zone: zone.home
+    devices:
+      - device_tracker.chips_keys
+    tolerance: 5
+    unit_of_measurement: mi
+  susan_home:
+    zone: zone.home
+    devices:
+      - device_tracker.susan_keys
+    tolerance: 5
+    unit_of_measurement: mi
+
+camera:
+  - platform: generic
+    still_image_url: https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?station=MEM&brand=wui&num=1&delay=15&type=TR0&frame=0&scale=0.3630434782608696&noclutter=0&showstorms=0&mapx=400&mapy=240&centerx=327.0059880239521&centery=401.1377245508982&transx=-72.99401197604789&transy=161.1377245508982&showlabels=1&severe=0&rainsnow=0&lightning=0&smooth=0&rand=24674055&lat=0&lon=0&label=you
+    
+input_select:
+  house_state:
+    name: 'House Status'
+    initial: 'Normal'
+    options:
+      - 'Normal'
+      - 'Party'
+      - 'Maintenance'
+      - 'Holiday'
+  hour:
+    name: Hour
+    options:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+  minute:
+    name: Minute
+    options:
+      - 0
+      - 5
+      - 10
+      - 15
+      - 20
+      - 25
+      - 30
+      - 35
+      - 40
+      - 45
+      - 50
+      - 55
+
+input_boolean:
+  masteralarmsunday:
+    name: 'Sunday'
+    initial: off
+  masteralarmmonday:
+    name: 'Monday'
+    initial: off
+  masteralarmtuesday:
+    name: 'Tuesday'
+    initial: off
+  masteralarmwednesday:
+    name: 'Wednesday'
+    initial: off
+  masteralarmthursday:
+    name: 'Thursday'
+    initial: off
+  masteralarmfriday:
+    name: 'Friday'
+    initial: off
+  masteralarmsaturday:
+    name: 'Saturday'
+    initial: off
+  samalarmsunday:
+    name: 'Sunday'
+    initial: off
+  samalarmmonday:
+    name: 'Monday'
+    initial: off
+  samalarmtuesday:
+    name: 'Tuesday'
+    initial: off
+  samalarmwednesday:
+    name: 'Wednesday'
+    initial: off
+  samalarmthursday:
+    name: 'Thursday'
+    initial: off
+  samalarmfriday:
+    name: 'Friday'
+    initial: off
+  samalarmsaturday:
+    name: 'Saturday'
+    initial: off
+  charliealarmsunday:
+    name: 'Sunday'
+    initial: off
+  charliealarmmonday:
+    name: 'Monday'
+    initial: off
+  charliealarmtuesday:
+    name: 'Tuesday'
+    initial: off
+  charliealarmwednesday:
+    name: 'Wednesday'
+    initial: off
+  charliealarmthursday:
+    name: 'Thursday'
+    initial: off
+  charliealarmfriday:
+    name: 'Friday'
+    initial: off
+  charliealarmsaturday:
+    name: 'Saturday'
+    initial: off
+  guestalarmsunday:
+    name: 'Sunday'
+    initial: off
+  guestalarmmonday:
+    name: 'Monday'
+    initial: off
+  guestalarmtuesday:
+    name: 'Tuesday'
+    initial: off
+  guestalarmwednesday:
+    name: 'Wednesday'
+    initial: off
+  guestalarmthursday:
+    name: 'Thursday'
+    initial: off
+  guestalarmfriday:
+    name: 'Friday'
+    initial: off
+  guestalarmsaturday:
+    name: 'Saturday'
+    initial: off
+  party:
+    name: 'party override'
+    initial: off
+  vacation:
+    name: on_vacation
+    initial: off
+  maint:
+    name: 'Maint override'
+    initial: off
+  samalarm:
+    name: 'Sams Alarm'
+    initial: off
+  charliealarm:
+    name: 'Charlies Alarm'
+    initial: off
+  masteralarm:
+    name: 'Master Bedroom Alarm'
+    initial: off
+  guestalarm:
+    name: 'Guestroom Alarm'
+    initial: off
+
+input_slider:
+  masteralarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  masteralarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  samalarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  samalarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  charliealarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  charliealarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  guestalarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  guestalarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  nighttime_hour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  nighttime_minutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  morning_hour:
+    name: Hour
+    icon: mdi:timer
+    initial: 5
+    min: 0
+    max: 23
+    step: 1
+  morning_minutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+  timeout_value:
+    name: timeout
+    icon: mdi:timer
+    initial: 600
+    min: 60
+    max: 600
+    step: 10
+  dsp1hp_black:
+    name: "black ink"
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+  dsp1hp_cyan:
+    name: "cyan ink"
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+  dsp1hp_yellow:
+    name: "yellow ink"
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+  dsp1hp_magenta:
+    name: "magenta ink"
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+  ofhp1_black:
+    name: "black Toner"
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+
+cover:
+  platform: myq
+  name: Garage door Opener
+  username: !secret myquser
+  password: !secret myqpassword
+  brand: liftmaster
